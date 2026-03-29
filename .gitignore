@@ -1,0 +1,68 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env/
+venv/
+env/
+ENV/
+face_env/
+.env
+.env.*
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# SQLite databases
+*.db
+*.sqlite3
+
+# Runtime generated data
+FaceRecognitionData/
+Data/
+data/
+outputs/
+temp/
+
+# Model downloads (InsightFace)
+.insightface/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Images captured during registration
+Registration/
+
+# CSV exports
+*.csv
+
+# Python packaging
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Testing
+.coverage
+htmlcov/
+
+# PySide UI compiled files
+*.ui.py

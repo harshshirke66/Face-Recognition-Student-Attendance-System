@@ -1,0 +1,28 @@
+name: attendance_admin
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  animate_do: ^4.2.0
+  camera: ^0.12.0+1
+  fl_chart: 0.71.0
+  flutter:
+    sdk: flutter
+  google_fonts: ^8.0.2
+  http: ^1.6.0
+  intl: ^0.20.2
+  lucide_icons: ^0.257.0
+  shared_preferences: 2.5.2
+  url_strategy: ^0.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

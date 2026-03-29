@@ -1,0 +1,25 @@
+name: attendance_student
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  animate_do: ^4.2.0
+  flutter:
+    sdk: flutter
+  google_fonts: ^8.0.2
+  http: ^1.6.0
+  intl: ^0.20.2
+  lucide_icons: ^0.257.0
+  table_calendar: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

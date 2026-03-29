@@ -1,0 +1,20 @@
+# AI/ML Dependencies
+insightface==0.7.3
+onnxruntime
+opencv-python-headless
+numpy==2.1.0
+scipy>=1.13.1
+scikit-learn>=1.6.1
+scikit-image>=0.24.0
+tqdm>=4.67.3
+
+# API & Server Dependencies
+fastapi>=0.115.0
+uvicorn>=0.32.0
+python-multipart>=0.0.12
+
+# Database & Config
+supabase>=2.12.0
+python-dotenv>=1.0.1
+pydantic
+pydantic_core
