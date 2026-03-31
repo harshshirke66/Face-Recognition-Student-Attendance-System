@@ -3,8 +3,8 @@ import numpy as np
 from insightface.app import FaceAnalysis
 
 # -------- Load Buffalo Engine ONCE --------
-app = FaceAnalysis(name='buffalo_l')
-app.prepare(ctx_id=0, det_size=(640, 640))
+app = FaceAnalysis(name='buffalo_s')
+app.prepare(ctx_id=-1, det_size=(640, 640))
 
 # Cosine similarity - Higher is more identical
 MATCH_THRESHOLD = 0.40
