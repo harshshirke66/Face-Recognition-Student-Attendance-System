@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'https://face-recognition-student-attendance-system-production.up.railway.app';
+  static const String baseUrl = 'http://localhost:8000';
 
   static Future<List<dynamic>> fetchTodayAttendance() async {
     final response = await http.get(Uri.parse('$baseUrl/attendance/today'));

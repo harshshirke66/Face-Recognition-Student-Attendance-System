@@ -3,8 +3,8 @@ import numpy as np
 from insightface.app import FaceAnalysis
 
 # -------- Load Buffalo Engine ONCE --------
-app = FaceAnalysis(name='buffalo_s')
-app.prepare(ctx_id=-1, det_size=(640, 640))
+app = FaceAnalysis(name='buffalo_l', providers=['CPUExecutionProvider'])
+app.prepare(ctx_id=0, det_size=(640, 640))
 
 # Cosine similarity - Higher is more identical
 MATCH_THRESHOLD = 0.40
@@ -67,8 +67,8 @@ class FaceMatcher:
             if not self.names or self.db_embs is None:
                 self.reload()
 
-            # Reduce detection size to 320 to save significant memory
-            faces = app.get(frame, det_size=(320, 320))
+            # Use original full-resolution detection for better accuracy locally
+            faces = app.get(frame)
             if not faces: return None, None, None, None, False
             
             face = faces[0]
