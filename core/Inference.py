@@ -67,7 +67,8 @@ class FaceMatcher:
             if not self.names or self.db_embs is None:
                 self.reload()
 
-            faces = app.get(frame)
+            # Reduce detection size to 320 to save significant memory
+            faces = app.get(frame, det_size=(320, 320))
             if not faces: return None, None, None, None, False
             
             face = faces[0]
