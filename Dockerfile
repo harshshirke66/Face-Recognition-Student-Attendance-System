@@ -1,10 +1,8 @@
-# 1. Use an official Python runtime as a parent image
-FROM python:3.10-slim
+# 1. Use an official Python runtime (Bullseye is more stable for AI)
+FROM python:3.10-slim-bullseye
 
-# 2. Install system dependencies for OpenCV and Face Recognition
+# 2. Install ONLY essential build tools (required for AI libraries)
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
@@ -13,6 +11,7 @@ WORKDIR /app
 
 # 4. Copy requirements and install
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 5. Copy the rest of the application
@@ -24,5 +23,5 @@ RUN python warmup.py
 # 7. Expose the port uvicorn runs on
 EXPOSE 8000
 
-# 8. Command to run the application
-CMD ["uvicorn", "server.py:app", "--host", "0.0.0.0", "--port", "8000"]
+# 8. Start the application
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
