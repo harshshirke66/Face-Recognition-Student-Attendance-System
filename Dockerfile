@@ -23,5 +23,5 @@ RUN python warmup.py
 # 7. Expose the port uvicorn runs on
 EXPOSE 8000
 
-# 8. Start the application
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
+# 8. Start the application using dynamic port
+CMD uvicorn server:app --host 0.0.0.0 --port ${PORT:-8000}
