@@ -401,7 +401,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Widget _buildScannerHUD() {
     bool detected = _lastDetection != null && _lastDetection!['detected'] == true;
-    bool isUnknown = detected && _lastDetection!['name'] == 'Unknown';
+    bool isUnknown = detected && (_lastDetection!['name'] == 'Unknown' || _lastDetection!['name'] == 'No compatible records');
     bool hasMatch = detected && !isUnknown;
     bool alreadyMarked = hasMatch && _lastDetection!['already_marked'] == true;
     
@@ -480,9 +480,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
           const SizedBox(height: 48),
           Row(
             children: [
-              _statCard('TOTAL_STUDENTS', _stats['total_students'].toString(), LucideIcons.users, const Color(0xFF10B981)),
-              _statCard('PRESENT_TODAY', _stats['present'].toString(), LucideIcons.checkCircle, Colors.blueAccent),
-              _statCard('ABSENT_TODAY', _stats['absent'].toString(), LucideIcons.userX, Colors.redAccent),
+              _statCard('TOTAL_STUDENTS', (_stats['total_students'] ?? '0').toString(), LucideIcons.users, const Color(0xFF10B981)),
+              _statCard('PRESENT_TODAY', (_stats['present'] ?? '0').toString(), LucideIcons.checkCircle, Colors.blueAccent),
+              _statCard('ABSENT_TODAY', (_stats['absent'] ?? '0').toString(), LucideIcons.userX, Colors.redAccent),
             ],
           ),
           const SizedBox(height: 48),
@@ -524,7 +524,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
     List<dynamic> statsToUse = _weeklyStats.isEmpty ? List.generate(7, (i) => {'date': '', 'present': 0}) : _weeklyStats;
     List<FlSpot> spots = [];
     for (int i = 0; i < statsToUse.length; i++) {
-        spots.add(FlSpot(i.toDouble(), (statsToUse[i]['present'] as int).toDouble()));
+        final val = statsToUse[i]['present'];
+        double presentCount = 0;
+        if (val is int) {
+          presentCount = val.toDouble();
+        } else if (val is double) {
+          presentCount = val;
+        } else if (val is String) {
+          presentCount = double.tryParse(val) ?? 0;
+        }
+        
+        spots.add(FlSpot(i.toDouble(), presentCount));
     }
 
     return Container(
@@ -559,9 +569,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 
   Widget _buildPieChart() {
-    double total = (_stats['total_students'] as int).toDouble();
-    double present = (_stats['present'] as int).toDouble();
-    if (total == 0) total = 1;
+    double total = double.tryParse(_stats['total_students']?.toString() ?? '0') ?? 0;
+    double present = double.tryParse(_stats['present']?.toString() ?? '0') ?? 0;
+    if (total == 0) total = 1; // Prevent division by zero
     
     return Container(
       padding: const EdgeInsets.all(32),
@@ -620,7 +630,9 @@ class _AdminDashboardState extends State<AdminDashboard> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text('STUDENT_DIRECTORY', style: GoogleFonts.syne(fontSize: 28, fontWeight: FontWeight.bold)), ElevatedButton.icon(onPressed: () {}, icon: const Icon(LucideIcons.download), label: const Text('EXPORT'))]),
             const SizedBox(height: 48),
             Expanded(
-              child: ListView.separated(
+              child: _students.isEmpty 
+              ? const Center(child: Text('NO_STUDENTS_LISTED', style: TextStyle(color: Colors.white24)))
+              : ListView.separated(
                 itemCount: _students.length,
                 separatorBuilder: (context, index) => const Divider(color: Colors.white10, height: 32),
                 itemBuilder: (context, index) {
